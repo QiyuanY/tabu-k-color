@@ -91,7 +91,7 @@ void SA::MainLoop() {
 
     for(int i=0;i<steps; i++) {
         //NextNe();
-        int c_node = rand() % K;
+        int c_node = rand() % Ne;
         int c_color = rand() % K;
         Cool(i);
         if(temp<min_temp) break;
