@@ -88,14 +88,12 @@ SA::SA(const string& fileName) {
 }
 
 void SA::MainLoop() {
-    int correct = 0;
-    bool correct_color = false;
-    int c_color;
-    int
-    for(int i=0;i<steps && !correct_color; i++) {
-        NextNe();
-        Cool(i);
 
+    for(int i=0;i<steps; i++) {
+        //NextNe();
+        int c_node = rand() % K;
+        int c_color = rand() % K;
+        Cool(i);
         if(temp<min_temp) break;
 
         /*if(f>best_f) {
