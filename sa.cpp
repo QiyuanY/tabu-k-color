@@ -94,13 +94,14 @@ void SA::MainLoop() {
         int c_node = rand() % Ne;
         int c_color = rand() % K;
 
-        Cool(i);
+
         if(temp<min_temp) break;
 
         /*if(f>best_f) {
             best = f;
         }*/
     }
+    Cool(temp);
 }
 
 void SA::GetBestState() {
