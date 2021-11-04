@@ -26,7 +26,7 @@ public:
     array<int,Ne>num_adj{}; //保存邻点个数
     array<array<int,N_C>,Ne> adj_color_table{};//领域颜色表
     array<array<int,N_C>,Ne> tabutenure{};//禁忌表
-    array<array<int,Ne-1>,Ne> Nb{};//顶点数*(顶点数-1)，保存邻点有哪些
+    array<array<int,Ne-1>,Ne> Nb{};//邻接表，顶点数*(顶点数-1)，保存邻点有哪些
     array<array<bool,Ne>,Ne> Adj{};//邻接矩阵，相邻则为true
     array<array<int,2>,Ne*(N_C-1)> equ_delt{};//保存相等的解
 
@@ -118,7 +118,7 @@ void Tabu_K::Initialize(const string& fileName)
             if (Adj[i][j]) {
                 int tmp_t = num_adj[i];
                 num_adj[i]++;
-                Nb[i][tmp_t] = j;  //等于去掉了adj表中的非零元素
+                Nb[i][tmp_t] = j;
             }
         }
     for(auto &it:Adj){
@@ -214,7 +214,7 @@ Tabu_K::Tabu_K(const string& strFile) {
     Initialize(strFile);
 }
 
-int main()
+/*int main()
 {
     int result_count = 10;//自动计算10次
     while (result_count) {
@@ -233,4 +233,4 @@ int main()
     }
     system("pause");
     return 0;
-}
+}*/
