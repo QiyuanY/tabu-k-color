@@ -41,7 +41,7 @@ public:
     void Cool(int num);
 
 private:
-    double alpha = 0.001;
+    double alpha = 0.01;
     int coolMode;
 };
 
@@ -129,8 +129,9 @@ void SA::MainLoop() {
                     if (c_color != j) { //如果颜色不相同
                         tmp_delt = h_color[j] - c_color_table;
                         //double gailv = rand()%1000 /1000;
-                        double gailv = 0.81;
-                        if (tmp_delt < 0|| (exp(-tmp_delt/temp) >gailv)) {
+                        //std::default_random_engine e((unsigned int)time(0));
+                        double gailv = 0.9;
+                        if (tmp_delt < 0|| (exp(-tmp_delt/temp*100) >gailv)) {
 
                             sel_vertex = i;
                             sel_color = j;
@@ -184,8 +185,10 @@ void SA::Cool(int num) {
         case 1:
             temp = temp * rate;
             break;
+        case 2:
+            temp = temp/(1+alpha*temp);
         default:
-            //temp = temp0 * (1/log(num+2));
+            temp = temp * (1/log(1/num+2));
             break;
     }
 }
