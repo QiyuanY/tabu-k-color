@@ -10,16 +10,17 @@
 
 using namespace std;
 #define Ne 500
-#define K_c 49
+#define K_c 48
 class SA{
 public:
     int N{}, K{};
     int iter{};
-    double temp = 1.0;
-    double temp0 = 1.0;
-    double min_temp = 0.0001;
+    double temp = 10.0;
+    double temp0 = 10.0;
+    double min_temp = 0.0000000000000001;
     double rate = 0.99;
-    int steps = 100000;
+    int steps = 100000;//这里考虑一下如何随着温度的降低调整一下，
+    // 一开始可以小一点，理论上应该是温度越低步长越小，那就应该多探索几次
     int f=0,best_f=0;
     int sel_vertex{}, sel_color{};// move
     int delt{};//此次迭代的最优解
@@ -125,14 +126,13 @@ void SA::MainLoop() {
             h_color = adj_color_table[i]; //当前节点i所有不同颜色邻居的个数
             c_color_table = h_color[c_color];//即adj_color_table[i][sol[i]]的值  ->  i节点颜色为sol[i]的邻居的个数
             if (c_color_table > 0) {  //颜色表此处的值不为0
-                    int j = rand() %K_c;
+                    int j = rand() % K_c;
                     if (c_color != j) { //如果颜色不相同
                         tmp_delt = h_color[j] - c_color_table;
-                        //double gailv = rand()%1000 /1000;
+                        double gailv = rand()%1000 /1000;
                         //std::default_random_engine e((unsigned int)time(0));
-                        double gailv = 0.9;
-                        if (tmp_delt < 0|| (exp(-tmp_delt/temp*100) >gailv)) {
-
+                        //double gailv = 0.8;
+                        if (tmp_delt < 0|| (exp(-tmp_delt/temp*1000) >gailv)) {
                             sel_vertex = i;
                             sel_color = j;
                             delt = tmp_delt;
