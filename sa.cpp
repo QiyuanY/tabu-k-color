@@ -10,7 +10,7 @@
 
 using namespace std;
 #define Ne 500
-#define K_c 48
+#define K_c 70
 class SA{
 public:
     int N{}, K{};
@@ -19,7 +19,7 @@ public:
     double temp0 = 10.0;
     double min_temp = 0.0000000000000001;
     double rate = 0.99;
-    int steps = 100000;//这里考虑一下如何随着温度的降低调整一下，
+    int steps = 10000;//这里考虑一下如何随着温度的降低调整一下，
     // 一开始可以小一点，理论上应该是温度越低步长越小，那就应该多探索几次
     int f=0,best_f=0;
     int sel_vertex{}, sel_color{};// move
@@ -111,7 +111,6 @@ SA::SA(const string& fileName) {
 }
 
 void SA::MainLoop() {
-
     for(int it=0;it<steps; it++) {
         //NextNe();
         delt = 0;//初始为最大整数
@@ -132,7 +131,8 @@ void SA::MainLoop() {
                         double gailv = rand()%1000 /1000;
                         //std::default_random_engine e((unsigned int)time(0));
                         //double gailv = 0.8;
-                        if (tmp_delt < 0|| (exp(-tmp_delt/temp*1000) >gailv)) {
+                        if (tmp_delt < 0|| (exp(-tmp_delt/temp*100) >gailv)) {
+                            //if(f<50) steps*=10;
                             sel_vertex = i;
                             sel_color = j;
                             delt = tmp_delt;
@@ -225,8 +225,10 @@ int main()
         auto *Si = new SA("DSJC500.5.col");
         clock_t start, end;
         start = clock();
+        Si->steps = 10000;
         while (Si->f)
         {
+
             Si->MainLoop();
             Si->Cool(1);
             Si->iter++;
